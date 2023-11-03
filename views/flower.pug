@@ -1,0 +1,24 @@
+extends layout
+block content
+  h1= title
+  p Welcome to the #{title} page.
+  br
+  br
+  -
+    let results = [
+      { flowerName: "Rose", flowerCost: 10, description: "Roses are red" },
+      { flowerName: "Sunflower",flowerCost: 04, description: "It follows the sun and have bright and radiating petals" },
+      { flowerName: "Tulip", flowerCost: 05, description: "symbolize for spring" }
+    ]
+  div.container-fluid
+    div.row
+      each item, index in results
+        div.col-sm-2(onclick=`buy(${index})`)
+          h4 flowerName: #{item.flowerName}
+          p flowerCost: $#{item.flowerCost}
+          p Description: #{item.description}
+
+  script.
+    function buy(index) {
+      alert(`You purchased item ${index+1}.`);
+    }

@@ -1,0 +1,23 @@
+extends layout
+block content
+  h1= title
+  -
+    const image_names = [
+      "Rose.jpg",
+      "sunflower.jpg",
+      "Tulip.jpg",
+      "lily.jpg",
+      "lotus.jpg"
+    ];
+
+  -
+    const num = 3;
+    const selectedImages = [];
+    for(let i = 0; i < num; i++) {
+        const randomValue = Math.floor(Math.random() * image_names.length)
+        const selectedImage = image_names[randomValue]
+        selectedImages.push(selectedImage)
+    };
+
+  each image in selectedImages
+    img(src=`/images/${image}`,alt="not found",height='300',width='300')

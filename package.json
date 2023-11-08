@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "nodemon"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
@@ -14,6 +14,12 @@
     "mongodb": "^6.2.0",
     "mongoose": "^8.0.0",
     "morgan": "^1.10.0",
+    "nodemon": "^3.0.1",
     "pug": "^3.0.2"
-  }
+  },
+  "description": "Access the live version of this project on render: [Render Link](https://f23wb56tanniru.onrender.com/)",
+  "main": "./bin/www",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

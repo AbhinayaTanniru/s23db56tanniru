@@ -33,20 +33,20 @@ async function recreateDB() {
   await Costume.deleteMany();
   let instance1 = new Costume(
     {
-      costume_type: "Tom and Jerry",
-      size: 'Medium',
-      cost: 30.5
-    });
-  let instance2 = new Costume(
-    {
       costume_type: "Ghost",
       size: 'Large',
       cost: 15.4
     });
+  let instance2 = new Costume(
+    {
+      costume_type: "Zoombies",
+      size: 'Small',
+      cost: 33
+    });
 
   let instance3 = new Costume(
     {
-      costume_type: "Dora",
+      costume_type: "Skeletons",
       size: 'Large',
       cost: 22.5
     });

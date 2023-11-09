@@ -1,5 +1,0 @@
-app.use('/flower', flowerRouter);
-app.use('/board', boardRouter);
-
-var flowerRouter = require('./routes/flower');
-var boardRouter = require('./routes/board');

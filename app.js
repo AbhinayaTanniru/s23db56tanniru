@@ -39,9 +39,9 @@ async function recreateDB() {
     });
   let instance2 = new Costume(
     {
-      costume_type: "angel",
-      size: 'Small',
-      cost: 33
+      costume_type: "Ghost",
+      size: 'Large',
+      cost: 15.4
     });
 
   let instance3 = new Costume(

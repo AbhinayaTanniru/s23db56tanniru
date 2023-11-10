@@ -4,8 +4,10 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const mongoose = require("mongoose");
+
 var resourceRouter = require('./routes/resource');
-var costumeRouter = require('./routes/costumes');
+var flowerRouter = require('./routes/flowers');
+
 require('dotenv').config();
 const connectionString = process.env.MONGO_CON
 mongoose.connect(connectionString, {
@@ -24,31 +26,32 @@ db.once("open", function () { console.log("Connection to DB succeeded") })
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-var flowerRouter = require('./routes/flower');
+var flowerRouter = require('./routes/flowers');
 var boardRouter = require('./routes/board');
 var chooseRouter = require("./routes/choose");
-var Costume = require("./models/costume");
+var flower = require("./models/flower");
+
 async function recreateDB() {
   // Delete everything
-  await Costume.deleteMany();
-  let instance1 = new Costume(
+  await flower.deleteMany();
+  let instance1 = new flower(
     {
-      costume_type: "Ghost",
-      size: 'Large',
-      cost: 15.4
+      flowerName: "Rose",
+      flowerCost: 10,
+      Description: "Roses are red"
     });
-  let instance2 = new Costume(
+  let instance2 = new flower(
     {
-      costume_type: "Zoombies",
-      size: 'Small',
-      cost: 33
+      flowerName: "Sunflower",
+      flowerCost: 4,
+      Description:"it follows the sun and have bright and radiating petals"
     });
 
-  let instance3 = new Costume(
+  let instance3 = new flower(
     {
-      costume_type: "Skeletons",
-      size: 'Large',
-      cost: 22.5
+      flowerName: "Tulip",
+      flowerCost: 5,
+      Description: "symbolize for spring"
     });
   instance1.save()
     .then(doc => { console.log("First object saved") })
@@ -76,8 +79,10 @@ app.use("/users", usersRouter);
 app.use('/flower', flowerRouter);
 app.use('/board', boardRouter);
 app.use("/choose", chooseRouter);
+
 app.use("/resource", resourceRouter);
-app.use('/costumes', costumeRouter);
+app.use('/flowers', flowerRouter);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

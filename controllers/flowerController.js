@@ -25,10 +25,19 @@ exports.flower_view_all_Page = async function (req, res) {
 };
 
 
-// for a specific flower.
-exports.flower_detail = function (req, res) {
-    res.send('NOT IMPLEMENTED: flower detail: ' + req.params.id);
-};
+// for a specific Costume.
+exports.flower_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+    try {
+    result = await flower.findById( req.params.id)
+    res.send(result)
+    } catch (error) {
+    res.status(500)
+    res.send(`{"error": document for id ${req.params.id} not found`);
+    }
+    };
+    
+
 // Handle flower create on POST.
 // Handle flower create on POST.
 exports.flower_create_post = async function (req, res) {
@@ -55,7 +64,24 @@ exports.flower_create_post = async function (req, res) {
 exports.flower_delete = function (req, res) {
     res.send('NOT IMPLEMENTED: flower delete DELETE ' + req.params.id);
 };
-// Handle flower update form on PUT.
-exports.flower_update_put = function (req, res) {
-    res.send('NOT IMPLEMENTED: flower update PUT' + req.params.id);
+
+// Handle Flower update form on PUT.
+exports.flower_update_put = async function(req, res) {
+console.log(`update on id ${req.params.id} with body
+${JSON.stringify(req.body)}`)
+try {
+let toUpdate = await flower.findById( req.params.id)
+// Do updates of properties
+if(req.body.flowerName)
+toUpdate.flowerName = req.body.flowerName;
+if(req.body.flowerCost) toUpdate.flowerCost = req.body.flowerCost;
+if(req.body.Description) toUpdate.Description = req.body.Description;
+let result = await toUpdate.save();
+console.log("Sucess " + result)
+res.send(result)
+} catch (err) {
+res.status(500)
+res.send(`{"error": ${err}: Update for id ${req.params.id}
+failed`);
+}
 };

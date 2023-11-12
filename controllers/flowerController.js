@@ -61,9 +61,19 @@ exports.flower_create_post = async function (req, res) {
 };
 
 // Handle flower delete form on DELETE.
-exports.flower_delete = function (req, res) {
-    res.send('NOT IMPLEMENTED: flower delete DELETE ' + req.params.id);
+// Handle Costume delete on DELETE.
+exports.flower_delete = async function(req, res) {
+console.log("delete " + req.params.id)
+try {
+result = await flower.findByIdAndDelete( req.params.id)
+console.log("Removed " + result)
+res.send(result)
+} catch (err) {
+res.status(500)
+res.send(`{"error": Error deleting ${err}}`);
+}
 };
+
 
 // Handle Flower update form on PUT.
 exports.flower_update_put = async function(req, res) {

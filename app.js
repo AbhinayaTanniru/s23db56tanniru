@@ -5,8 +5,7 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const mongoose = require("mongoose");
 
-var resourceRouter = require('./routes/resource');
-var flowerRouter = require('./routes/flowers');
+
 
 require('dotenv').config();
 const connectionString = process.env.MONGO_CON
@@ -24,12 +23,14 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 db.once("open", function () { console.log("Connection to DB succeeded") })
 
+var flower = require("./models/flower");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
-var flowerRouter = require('./routes/flowers');
+var flowerRouter = require('./routes/flower');
 var boardRouter = require('./routes/board');
 var chooseRouter = require("./routes/choose");
-var flower = require("./models/flower");
+var resourceRouter = require('./routes/resource');
+var flowersRouter = require('./routes/flowers');
 
 async function recreateDB() {
   // Delete everything
@@ -69,11 +70,13 @@ var app = express();
 // view engine setup
 app.set("view engine", "pug");
 app.set("views", path.join(__dirname, "views"));
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use('/flower', flowerRouter);
@@ -81,7 +84,7 @@ app.use('/board', boardRouter);
 app.use("/choose", chooseRouter);
 
 app.use("/resource", resourceRouter);
-app.use('/flowers', flowerRouter);
+app.use('/flowers', flowersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

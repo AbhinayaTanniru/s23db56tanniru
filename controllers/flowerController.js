@@ -26,22 +26,22 @@ exports.flower_view_all_Page = async function (req, res) {
 
 
 // for a specific Costume.
-exports.flower_detail = async function(req, res) {
+exports.flower_detail = async function (req, res) {
     console.log("detail" + req.params.id)
     try {
-    result = await flower.findById( req.params.id)
-    res.send(result)
+        result = await flower.findById(req.params.id)
+        res.send(result)
     } catch (error) {
-    res.status(500)
-    res.send(`{"error": document for id ${req.params.id} not found`);
+        res.status(500)
+        res.send(`{"error": document for id ${req.params.id} not found`);
     }
-    };
-    
+};
+
 
 // Handle flower create on POST.
 // Handle flower create on POST.
 exports.flower_create_post = async function (req, res) {
-    console.log(req.body)
+
     let document = new flower();
     // We are looking for a body, since POST does not have query parameters.
     // Even though bodies can be in many different formats, we will be picky
@@ -62,36 +62,50 @@ exports.flower_create_post = async function (req, res) {
 
 // Handle flower delete form on DELETE.
 // Handle Costume delete on DELETE.
-exports.flower_delete = async function(req, res) {
-console.log("delete " + req.params.id)
-try {
-result = await flower.findByIdAndDelete( req.params.id)
-console.log("Removed " + result)
-res.send(result)
-} catch (err) {
-res.status(500)
-res.send(`{"error": Error deleting ${err}}`);
-}
+exports.flower_delete = async function (req, res) {
+    console.log("delete " + req.params.id)
+    try {
+        result = await flower.findByIdAndDelete(req.params.id)
+        console.log("Removed " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": Error deleting ${err}}`);
+    }
 };
 
 
 // Handle Flower update form on PUT.
-exports.flower_update_put = async function(req, res) {
-console.log(`update on id ${req.params.id} with body
+exports.flower_update_put = async function (req, res) {
+    console.log(`update on id ${req.params.id} with body
 ${JSON.stringify(req.body)}`)
-try {
-let toUpdate = await flower.findById( req.params.id)
-// Do updates of properties
-if(req.body.flowerName)
-toUpdate.flowerName = req.body.flowerName;
-if(req.body.flowerCost) toUpdate.flowerCost = req.body.flowerCost;
-if(req.body.Description) toUpdate.Description = req.body.Description;
-let result = await toUpdate.save();
-console.log("Sucess " + result)
-res.send(result)
-} catch (err) {
-res.status(500)
-res.send(`{"error": ${err}: Update for id ${req.params.id}
+    try {
+        let toUpdate = await flower.findById(req.params.id)
+        // Do updates of properties
+        if (req.body.flowerName)
+            toUpdate.flowerName = req.body.flowerName;
+        if (req.body.flowerCost) toUpdate.flowerCost = req.body.flowerCost;
+        if (req.body.Description) toUpdate.Description = req.body.Description;
+        let result = await toUpdate.save();
+        console.log("Sucess " + result)
+        res.send(result)
+    } catch (err) {
+        res.status(500)
+        res.send(`{"error": ${err}: Update for id ${req.params.id}
 failed`);
-}
+    }
+};
+//Handle a show one view with id specified by query
+exports.flower_view_one_Page = async function (req, res) {
+    console.log("single view for id " + req.query.id)
+    try {
+        result = await flower.findById(req.query.id)
+        res.render('flowerdetail',
+        { title: 'flower Detail', toShow: result });
+
+    }
+    catch (err) {
+        res.status(500)
+        res.send(`{'error': '${err}'}`)
+    }
 };

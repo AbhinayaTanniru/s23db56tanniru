@@ -101,7 +101,7 @@ exports.flower_view_one_Page = async function (req, res) {
     try {
         result = await flower.findById(req.query.id)
         res.render('flowerdetail',
-        { title: 'flower Detail', toShow: result });
+            { title: 'flower Detail', toShow: result });
 
     }
     catch (err) {
@@ -109,3 +109,17 @@ exports.flower_view_one_Page = async function (req, res) {
         res.send(`{'error': '${err}'}`)
     }
 };
+// Handle building the view for creating a flower.
+// No body, no in path parameter, no query.
+// Does not need to be async
+exports.flower_create_Page = function (req, res) {
+    console.log("create view")
+    try {
+        res.render('flowercreate', { title: 'flower Create' });
+    }
+    catch (err) {
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+

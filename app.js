@@ -34,7 +34,7 @@ var flowersRouter = require('./routes/flowers');
 
 async function recreateDB() {
   // Delete everything
-  await flower.deleteMany();
+  await flower.deleteMany()
   let instance1 = new flower(
     {
       flowerName: "Rose",

@@ -1,0 +1,46 @@
+extends layout
+block content
+  h1= title
+  - let flowerid = toShow._id
+  - let flowerName = toShow.flowerName 
+  - let flowerCost = toShow.flowerCost
+  - let Description = toShow.Description 
+  div.row(class='mb-2')
+    div.mr-1 ID is
+    div #{flowerid}
+  - let actionid = "/resource/flowers/" + flowerid
+  form(id='FlowerForm', action= actionid, method="PUT")
+    div.form-group
+      label.flowerAttr(for='flowername') Flower  Name
+      input#flowerName(type='text', name='flowerName', value= flowerName )
+    div.form-group
+      label.flowerAttr(for='Description')  Description 
+      input#Description(type='text', name='Description', value= Description  )
+    div.form-group
+      label.flowerAttr(for='flowerCost') Flower  cost
+      input#flowerCost(type='number', name='flowerCost',step='any', value= flowerCost )
+    input(type="submit")
+  script.
+    document.forms['FlowerForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        if(resp.ok){
+            alert ("Flower Updated Successfully")
+            document.getElementById('FlowerForm').reset()
+        }
+        else {
+            alert (" File to Update Flower")
+        }
+      }).then((body) => {
+        console.log(body)
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Update failed " + error )
+      });
+    });
+

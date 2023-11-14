@@ -7,4 +7,6 @@ router.get("/", flower_controlers.flower_view_all_Page);
 router.get('/detail', flower_controlers.flower_view_one_Page);
 /* GET create flower page */
 router.get('/create', flower_controlers.flower_create_Page);
+/* GET create update page */
+router.get('/update', flower_controlers.flower_update_Page);
 module.exports = router;

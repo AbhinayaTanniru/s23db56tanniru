@@ -135,5 +135,22 @@ exports.flower_update_Page = async function (req, res) {
         res.send(`{'error': '${err}'}`);
     }
 };
+// Handle a delete one view with id from query
+exports.flower_delete_Page = async function (req, res) {
+    console.log("Delete view for id " + req.query.id)
+    try {
+        result = await flower.findById(req.query.id)
+        res.render('flowerdelete', {
+            title: 'flower Delete', toShow:
+                result
+        });
+    }
+    catch (err) {
+        res.status(500)
+        res.send(`{'error': '${err}'}`);
+    }
+};
+
+
 
 

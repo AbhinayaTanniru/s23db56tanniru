@@ -9,4 +9,6 @@ router.get('/detail', flower_controlers.flower_view_one_Page);
 router.get('/create', flower_controlers.flower_create_Page);
 /* GET create update page */
 router.get('/update', flower_controlers.flower_update_Page);
+/* GET delete flower page */
+router.get('/delete', flower_controlers.flower_delete_Page);
 module.exports = router;

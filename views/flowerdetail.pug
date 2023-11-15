@@ -1,21 +1,22 @@
 extends layout
 block content
-  h1= title
-  - let flowerid = toShow._id
-  - let flowerName = toShow.flowerName
-  - let flowerCost = toShow.flowerCost
-  - let flowerDescription  = toShow.Description 
-    div
-      div.row
-        div(class='flowerAttr mr-3') flower ID:
-        div #{flowerid}
-      div.row
-        div(class='flowerAttr mr-3') flower Name:
-        div #{flowerName}
-      div.row
-        div(class='flowerAttr mr-3') flower Cost:
-        div #{flowerCost}
-      div.row
-        div(class='flowerAttr mr-3') Description:
-        div #{flowerDescription}
+  h1.text-left= title
+  // Use a card layout for better styling and centering
+  .card.mx-auto.mt-5
+    .card-body.text-left
+    div.row
+      div(class='flowerAttr') flower ID:
+      div #{toShow._id}
+    div.row
+      div(class='flowerAttr') flower Name :
+      div #{toShow.flowerName}
+    div.row
+      div(class='flowerAttr') Description :
+      div #{toShow.Description}
+    div.row
+      div(class='flowerAttr') flower Cost:
+      div #{toShow.flowerCost}
+  .row.mt-3
+    .col.text-left
+    a.btn.btn-primary(href='/flowers') Back to flower  List
 

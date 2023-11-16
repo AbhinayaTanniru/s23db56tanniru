@@ -1,22 +1,27 @@
 extends layout
+
 block content
   h1.text-left= title
-  // Use a card layout for better styling and centering
-  .card.mx-auto.mt-5
-    .card-body.text-left
-    div.row
-      div(class='flowerAttr') flower ID:
-      div #{toShow._id}
-    div.row
-      div(class='flowerAttr') flower Name :
-      div #{toShow.flowerName}
-    div.row
-      div(class='flowerAttr') Description :
-      div #{toShow.Description}
-    div.row
-      div(class='flowerAttr') flower Cost:
-      div #{toShow.flowerCost}
-  .row.mt-3
-    .col.text-left
-    a.btn.btn-primary(href='/flowers') Back to flower  List
 
+  if (toShow == null)
+    h2 No instance to delete
+  else
+    // Use a card layout for better styling and centering
+    .card.mx-auto.mt-5
+      .card-body.text-left
+        div.row
+          div(class='flowerAttr') flower ID:
+          div #{toShow._id}
+        div.row
+          div(class='flowerAttr') flower Name :
+          div #{toShow.flowerName}
+        div.row
+          div(class='flowerAttr') Description :
+          div #{toShow.Description}
+        div.row
+          div(class='flowerAttr') flower Cost:
+          div #{toShow.flowerCost}
+
+    .row.mt-3
+      .col.text-left
+        a.btn.btn-primary(href='/flowers') Back to flower List

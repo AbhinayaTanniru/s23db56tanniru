@@ -1,6 +1,24 @@
-each item in theflowers
-  div
-    p flowerName  - #{item.flowerName}
-    p flowerCost  - #{item.flowerCost}
-    p Description  - #{item.Description}
-    br
+extends layout
+block content
+ h1= title
+ - let items = results;
+   each item in items
+    - let destination = `dispatch("/flowers/update?id=${item._id}")`
+      div
+       p flowerName  - #{item.flowerName}
+       p flowerCost  - #{item.flowerCost}
+       p Description - #{item.Description}
+       button.btn( class="btn-primary ml-1", onclick= destination) Update
+       br
+       br
+ script.
+  function dispatch(path){
+   window.location.href=path
+  }
+  
+  //- each item in theflowers
+//-   div
+//-     p flowerName  - #{item.flowerName}
+//-     p flowerCost  - #{item.flowerCost}
+//-     p Description  - #{item.Description}
+//-     br

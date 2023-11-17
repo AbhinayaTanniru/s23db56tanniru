@@ -50,6 +50,7 @@ var boardRouter = require('./routes/board');
 var chooseRouter = require("./routes/choose");
 var resourceRouter = require('./routes/resource');
 var flowersRouter = require('./routes/flowers');
+var Account =require('./models/account');
 
 async function recreateDB() {
   // Delete everything
@@ -99,8 +100,7 @@ app.use(require('express-session')({
   resave: false,
   saveUninitialized: false
 }));
-app.use(passport.initialize());
-app.use(passport.session());
+
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
@@ -125,6 +125,13 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
 module.exports = app;
 
 

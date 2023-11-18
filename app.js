@@ -4,25 +4,9 @@ var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const mongoose = require("mongoose");
+var Account =require('./models/account');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-
-
-require('dotenv').config();
-const connectionString = process.env.MONGO_CON
-mongoose.connect(connectionString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.log("Error Connecting to MongoDB: ", err));
-//Get the default connection
-var db = mongoose.connection;
-
-//Bind connection to error event
-
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.once("open", function () { console.log("Connection to DB succeeded") })
 passport.use(new LocalStrategy(
   function (username, password, done) {
     Account.findOne({ username: username })
@@ -42,6 +26,28 @@ passport.use(new LocalStrategy(
   })
 )
 
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
+
+
+require('dotenv').config();
+const connectionString = process.env.MONGO_CON
+mongoose.connect(connectionString, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.log("Error Connecting to MongoDB: ", err));
+//Get the default connection
+var db = mongoose.connection;
+
+//Bind connection to error event
+
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once("open", function () { console.log("Connection to DB succeeded") })
+
+
 var flower = require("./models/flower");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -50,7 +56,6 @@ var boardRouter = require('./routes/board');
 var chooseRouter = require("./routes/choose");
 var resourceRouter = require('./routes/resource');
 var flowersRouter = require('./routes/flowers');
-var Account =require('./models/account');
 
 async function recreateDB() {
   // Delete everything
@@ -100,6 +105,8 @@ app.use(require('express-session')({
   resave: false,
   saveUninitialized: false
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -125,12 +132,7 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render("error");
 });
-app.use(passport.initialize());
-app.use(passport.session());
 
-passport.use(new LocalStrategy(Account.authenticate()));
-passport.serializeUser(Account.serializeUser());
-passport.deserializeUser(Account.deserializeUser());
 
 module.exports = app;
 

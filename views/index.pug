@@ -1,19 +1,30 @@
+//- extends layout
+//- block content
+//-   h1= title
+//-   p Welcome to the #{title} server.
+//-   button(type="button",class="btn btn-secondary",onclick="goFaster()") Press Me  
+//-   br
+//-   br
+//-   #faster Increase The Speed
+//-   br 
+
+//-   a(href="/flower") View Flowers 
+//-   script.
+//-     var mph = 20;
+//-     var change = 1;
+//-     function goFaster(){
+//-       mph = mph + change;
+//-       change = change + 1;
+//-       document.getElementById('faster').textContent = `MPH ${mph} with change ${change}`
+//-     }
 extends layout
 block content
-  h1= title
-  p Welcome to the #{title} server.
-  button(type="button",class="btn btn-secondary",onclick="goFaster()") Press Me  
-  br
-  br
-  #faster Increase The Speed
-  br 
-
-  a(href="/flower") View Flowers 
-  script.
-    var mph = 20;
-    var change = 1;
-    function goFaster(){
-      mph = mph + change;
-      change = change + 1;
-      document.getElementById('faster').textContent = `MPH ${mph} with change ${change}`
-    }
+  if (!user)
+    a(href="/login") Login
+    br
+    a(href="/register") Register
+  if (user)
+    p You are currently logged in as #{user.username}
+    a(href="/flowers") Take me to flowers 
+    br
+    a(href="/logout") Logout

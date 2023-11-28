@@ -1,7 +1,6 @@
 extends layout
 block content
   h1= title
-
   if (toShow == null)
     h2 No instance to delete
   else
@@ -12,7 +11,6 @@ block content
     div.row(class='mb-2')
       div.mr-1 ID is
       div #{flowerid}
-
     - let actionid = "/resource/flowers/" + flowerid
     form(id='FlowerForm', action= actionid, method="PUT")
       div.form-group
@@ -25,7 +23,7 @@ block content
         label.flowerAttr(for='flowerCost') Flower Cost
         input#flowerCost(type='number', name='flowerCost', step='any', value= flowerCost )
       input(type="submit")
-
+      
     script.
       document.forms['FlowerForm'].addEventListener('submit', (event) => {
         event.preventDefault();

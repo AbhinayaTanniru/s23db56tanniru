@@ -51,12 +51,25 @@ exports.flower_create_post = async function (req, res) {
     document.flowerCost = req.body.flowerCost;
     document.Description = req.body.Description;
     try {
-        let result = await document.save();
-        res.send(result);
-    }
-    catch (err) {
-        res.status(500);
-        res.send(`{"error": ${err}}`);
+        await document.save();
+        res.redirect('/flowers'); 
+    } catch (error) {
+        if (error.name === 'ValidationError') {
+            
+            const errors = Object.values(error.errors).map((err) => err.message);
+            return res.status(400).render('create', {
+                title: 'Create flower',
+                errors,
+                
+            });
+        }
+
+        // Handle other types of errors
+
+        console.error(error);
+
+        res.status(500).send('Internal Server Error');
+
     }
 };
 

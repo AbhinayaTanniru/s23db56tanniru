@@ -1,19 +1,27 @@
 extends layout
 block content
- h1= title
+ h1.text-center= title
+ -let destination3 = `dispatch("/flowers/create")`
+ div.container.text-center
+  button.btn(class="btn-primary", onclick=destination3) Create
  - let items = results;
-   each item in items
-    - let destination = `dispatch("/flowers/update?id=${item._id}")`
-      div
-       p flowerName  - #{item.flowerName}
-       p flowerCost  - #{item.flowerCost}
-       p Description - #{item.Description}
-       button.btn( class="btn-primary ml-1", onclick= destination) Update
+  each item in items
+   - let destination0 = `dispatch("/flowers/detail?id=${item._id}")`
+   - let destination1 = `dispatch("/flowers/update?id=${item._id}")`
+   - let destination2 = `dispatch("/flowers/delete?id=${item._id}")`
+    div.container.my-4
+     .row.justify-content-center
+      .col-8.text-center.bg-light.py-3
+       p.flower-info flowerName - #{item.flowerName}
+       p.flower-info flowerCost  - #{item.flowerCost}
+       p.flower-info Description - #{item.Description}
+       button.btn.btn-info.mx-2.my-2(class="btn-primary", onclick=destination0) Detail
+       button.btn.btn-warning.mx-2.my-2(class="btn-primary", onclick=destination1) Update
+       button.btn.btn-danger.mx-2.my-2(class="btn-primary", onclick=destination2) Delete
        br
        br
  script.
   function dispatch(path){
    window.location.href=path
   }
-  
-  
+

@@ -9,10 +9,16 @@ block content
       label.flowerAttr(for='Description') Description 
       input#Description(type='text', name='Description')
     div.form-group
-      label.flowerAttr(for='flowerCost') flower cost
+      label.flowerAttr(for='flowerCost') cost (0 to 100)
       input#flowerCost(type='number',step='any', name='flowerCost')
+      
     input(type="submit")
+    button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
   script.
+    function cancel() {
+      // Go back to the home page for the flower collection
+      window.location.href='/flowers'
+    }
     document.forms['FlowerForm'].addEventListener('submit', (event) => {
       event.preventDefault();
       // TODO do something here to show user that form is being submitted
@@ -25,7 +31,7 @@ block content
             document.getElementById('FlowerForm').reset()
         }
         else {
-            alert (" File to Create Flower")
+            alert (" failed to create Flower")
         }
       }).then((body) => {
        console.log (body)
